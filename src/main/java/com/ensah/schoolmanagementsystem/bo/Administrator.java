@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@DiscriminatorValue("administrator")
+@PrimaryKeyJoinColumn(name="administratorId")
 public class Administrator extends User{
     @NotBlank(message = "Please provide an administrative grade")
     private String grade;

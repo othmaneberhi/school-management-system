@@ -10,8 +10,7 @@ import java.util.Date;
 
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="user_type", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
