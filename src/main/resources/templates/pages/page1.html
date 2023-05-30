@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/wrapper}">
+<head>
+    <meta charset="UTF-8">
+    <title>Page 1</title>
+</head>
+<body>
+
+<li layout:fragment="pageBreadcrumb">
+    page1
+</li>
+<h1 layout:fragment="pageTitle">
+    page1
+</h1>
+<div layout:fragment="pageContent">
+    test page 1 content
+</div>
+
+</body>
+</html>
