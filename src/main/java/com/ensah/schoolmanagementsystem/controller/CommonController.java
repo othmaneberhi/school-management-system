@@ -10,6 +10,11 @@ public class CommonController {
         return "pages/error/error-404";
     }
 
+    @GetMapping("/access-denied")
+    public String showAccessDenied(){
+        return "pages/error/access-denied";
+    }
+
 //    @GetMapping("/access-denied")
 //    public String showAccessDenied() {
 //        return "pages/error/access-denied";
