@@ -1,10 +1,9 @@
 package com.ensah.schoolmanagementsystem.service;
 
-import com.ensah.schoolmanagementsystem.bo.Role;
+import com.ensah.schoolmanagementsystem.bo.Account;
 
-import java.util.List;
 
 public interface IAccountService {
-
+    public void addAccount(Account account);
 
 }

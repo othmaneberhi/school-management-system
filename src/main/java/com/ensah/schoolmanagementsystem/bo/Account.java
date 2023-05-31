@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,9 +13,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(mappedBy = "account")
-    @JoinColumn(name="user_id")
     private User user;
-    private Long userId;
     private String password;
     @ManyToOne
     @JoinColumn(name="role_id")
@@ -34,14 +33,6 @@ public class Account {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getPassword() {

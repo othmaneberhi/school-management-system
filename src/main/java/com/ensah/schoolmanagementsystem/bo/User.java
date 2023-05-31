@@ -17,6 +17,7 @@ public class User {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="account_id")
     private Account account;
     @NotBlank(message = "Please enter a CIN")
     @Pattern(regexp = "^[A-Za-z]{2}\\d{6}$", message = "Wrong CIN format)")
@@ -121,5 +122,37 @@ public class User {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getCin() {
+        return cin;
+    }
+
+    public void setCin(String cin) {
+        this.cin = cin;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
