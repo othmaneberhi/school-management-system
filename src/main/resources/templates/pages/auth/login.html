@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" >
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,15 +19,23 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h2 class="text-center text-dark mt-5">Schoolio - Login</h2>
-      <div class="card my-5">
+      <div class="card mb-5 my-5">
 
-        <form class="card-body cardbody-color p-lg-5">
-
-          <div class="text-center">
+        <form th:action="@{/loginProcessing}" method="post"  class="card-body cardbody-color p-lg-5">
+            <h2 class="text-center text-dark mb-2">Login</h2>
+            <div class="text-center">
             <img src="../assets/images/logo.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
                  width="200px" alt="profile">
           </div>
+
+            <div  th:if="${param.error}" class="alert alert-danger py-3 px-5 text-center">
+                <div>
+                    <span th:if="${#strings.equals(param.error, 'other')}">Please verify your login or password</span>
+                    <span th:if="${#strings.equals(param.error, 'locked')}">Your account is locked</span>
+                    <span th:if="${#strings.equals(param.error, 'expired')}">Your account is expired</span>
+                    <span th:if="${#strings.equals(param.error, 'disabled')}">Your account is disabled</span>
+                </div>
+            </div>
 
           <div class="mb-3">
             <input type="text" class="form-control" id="Username" aria-describedby="emailHelp"
@@ -37,7 +46,7 @@
           </div>
           <div class="text-center"><button type="submit" class="btn btn-dark px-5 mb-5 w-100">Login</button></div>
           <div id="emailHelp" class="form-text text-center mb-5 text-dark">Not
-            Registered? <a href="#" class="text-dark fw-bold"> Create an
+            Registered? <a th:href="@{/register}" class="text-dark fw-bold"> Create an
               Account</a>
           </div>
         </form>

@@ -21,6 +21,8 @@ public class Account {
     private Role role;
     private boolean enabled = true;
     private boolean expired = false;
+    private boolean locked = false;
+    private boolean isCredentialsExpired = false;
     @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP")
     private Date createdAt;
@@ -97,5 +99,21 @@ public class Account {
 
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isCredentialsExpired() {
+        return isCredentialsExpired;
+    }
+
+    public void setCredentialsExpired(boolean credentialsExpired) {
+        isCredentialsExpired = credentialsExpired;
     }
 }
