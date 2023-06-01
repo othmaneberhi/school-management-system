@@ -13,4 +13,5 @@ public interface IStudentService {
     void updateStudent(Student student);
 
     public void deleteStudent(Student student);
+    public List<Student> getAllStudentsByOrderByLastName();
 }

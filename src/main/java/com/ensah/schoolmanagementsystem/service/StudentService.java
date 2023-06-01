@@ -39,4 +39,9 @@ public class StudentService implements IStudentService{
     public void deleteStudent(Student student) {
         studentRepository.delete(student);
     }
+
+    @Override
+    public List<Student> getAllStudentsByOrderByLastName() {
+        return studentRepository.findAllByOrderByLastName();
+    }
 }
