@@ -1,5 +1,7 @@
 package com.ensah.schoolmanagementsystem.bo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,7 @@ public class Student extends User{
     private String cne;
 
     @NotNull(message = "Please provide a birthdate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "inscription_id")
