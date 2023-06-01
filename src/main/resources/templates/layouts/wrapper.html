@@ -7,9 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> Schoolio - School management system</title>
   <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets/images/favicon.png}">
   <!-- Custom CSS -->
-  <link href="../dist/css/style.min.css" rel="stylesheet">
+
+  <link th:href="@{/dist/css/style.min.css}" rel="stylesheet">
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -30,12 +31,12 @@
       <div class="navbar-header" data-logobg="skin6">
         <a class="navbar-brand" href="index.html">
           <b class="logo-icon">
-            <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo"  width="50" height="50"/>
-            <img src="../assets/images/logo-light-icon.png" alt="homepage" class="light-logo"  width="50" height="50"/>
+            <img th:src="@{/assets/images/logo-icon.png}" alt="homepage" class="dark-logo"  width="50" height="50"/>
+            <img th:src="@{/assets/images/logo-light-icon.png}" alt="homepage" class="light-logo"  width="50" height="50"/>
           </b>
           <span class="logo-text">
-                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" width="90"/>
-                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" width="90"/>
+                            <img th:src="@{/assets/images/logo-text.png}" alt="homepage" class="dark-logo" width="90"/>
+                            <img th:src="@{/assets/images/logo-light-text.png}" class="light-logo" alt="homepage" width="90"/>
           </span>
         </a>
         <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
@@ -54,7 +55,7 @@
         <ul class="navbar-nav float-end">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="../assets/images/users/profile.png" alt="user" class="rounded-circle" width="40">
+              <img th:src="@{/assets/images/users/profile.png}" alt="user" class="rounded-circle" width="40">
               <div class="ms-3">
                 <h5 class="mb-0 text-capitalize" sec:authentication="principal.username"></h5>
                 <h6 class="mb-0 text-muted" sec:authentication="principal.authorities[0]"></h6>
@@ -129,16 +130,16 @@
   </div>
 </div>
 
-<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../dist/js/app-style-switcher.js"></script>
+<script th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/dist/js/app-style-switcher.js}"></script>
 <!--Wave Effects -->
-<script src="../dist/js/waves.js"></script>
+<script th:src="@{/dist/js/waves.js}"></script>
 <!--Menu sidebar -->
-<script src="../dist/js/sidebarmenu.js"></script>
+<script th:src="@{/dist/js/sidebarmenu.js}"></script>
 <!--Custom JavaScript -->
-<script src="../dist/js/custom.js"></script>
+<script th:src="@{/dist/js/custom.js}"></script>
 </body>
 
 </html>
