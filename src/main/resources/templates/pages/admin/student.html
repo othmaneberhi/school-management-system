@@ -4,38 +4,256 @@
       layout:decorate="~{layouts/wrapper}">
 <head>
     <meta charset="UTF-8">
-    <title>Page 1</title>
+    <title>Schoolio - Student</title>
 </head>
 <body>
 
-<li layout:fragment="pageBreadcrumb">
-    Students
-</li>
-<h1 layout:fragment="pageTitle">
-    Students
-</h1>
 <div layout:fragment="pageContent">
-    <div class="row">
-        <!-- column -->
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <!-- title -->
-                    <div class="d-md-flex">
-                        <div>
-                            <h4 class="card-title">username </h4>
-                            <h5 class="card-subtitle">details aboute ssss</h5>
-                        </div>
-                        <div class="ms-auto">
-                           buttons
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-sub-header">
+                            <h3 class="page-title">Student Details</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                                <li class="breadcrumb-item active">Student Details</li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- title -->
-                    <p th:text="student.firstName">
-
-                    </p>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="about-info">
+                                <h4>Profile <span>
+                                    <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id} + '/edit'} " class="btn bg-danger-light">
+                                        <i class="feather-edit"></i>
+                                    </a></span>
+                                </h4>
+                            </div>
+                            <div class="student-profile-head mt-5">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4">
+                                        <div class="profile-user-box">
+                                            <div class="profile-user-img">
+                                                <img th:src="@{/assets/img/profile-user.jpg}" alt="Profile">
+                                                <div class="form-group students-up-files profile-edit-icon mb-0">
+                                                    <div class="uplod d-flex">
+                                                        <label class="file-upload profile-upbtn mb-0">
+                                                            <i class="feather-edit-3"></i><input type="file">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="names-profiles">
+                                                <h4 th:text="${student.lastName+' '+student.firstName}"></h4>
+                                                <h5 th:text="${student.email}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="student-personals-grp">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="heading-detail">
+                                            <h4>Personal Details :</h4>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-user"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Last name</h4>
+                                                    <h5 th:text="${student.lastName}"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-user"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>First name</h4>
+                                                    <h5 th:text="${student.firstName}"></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row ">
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-user"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Arabic last name</h4>
+                                                    <h5 th:text="${student.arabicLastName}"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-user"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Arabic first name</h4>
+                                                    <h5 th:text="${student.arabicFirstName}"></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-phone-call"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Mobile</h4>
+                                                    <h5 th:text="${student.phone}"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-mail"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Email</h4>
+                                                    <h5 th:text="${student.email}"></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="personal-activity col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-square"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>CNE</h4>
+                                                    <h5 th:text="${student.cne}"></h5>
+                                                </div>
+                                            </div>
+                                            <div class="personal-activity mb-0 col-lg-6">
+                                                <div class="personal-icons">
+                                                    <i class="feather-square"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>CIN</h4>
+                                                    <h5 th:text="${student.cin}" ></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="personal-activity">
+                                            <div class="personal-icons">
+                                                <i class="feather-calendar"></i>
+                                            </div>
+                                            <div class="views-personal">
+                                                <h4>Date of Birth</h4>
+                                                <h5 th:text="${#dates.format(student.birthDate, 'yyyy-MM-dd')}"></h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="student-personals-grp mb-4">
+                                <div class="card mb-0">
+                                    <div class="card-body">
+                                        <div class="heading-detail">
+                                            <h4>Account details</h4>
+                                        </div>
+                                        <div th:if="${student.account == null}">
+                                            <p>This student doesn't have an account yet. Would you like to create one for them?</p>
+                                            <a class="btn btn-sm btn-primary" th:href="@{/admin/create-account/{id}(id=${student.id})}">Create Account</a>
+                                        </div>
+                                        <div th:if="${student.account != null}">
+                                            <div class="row ">
+                                                <div class="personal-activity col-lg-6">
+                                                    <div class="personal-icons">
+                                                        <i class="feather-user"></i>
+                                                    </div>
+                                                    <div class="views-personal">
+                                                        <h4>Role</h4>
+                                                        <h5 th:text="${student.account.role}"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="personal-activity col-lg-6">
+                                                    <div class="personal-icons">
+                                                        <i class="feather-user"></i>
+                                                    </div>
+                                                    <div class="views-personal">
+                                                        <h4>Created at</h4>
+                                                        <h5 th:text="${student.account.createdAt}"></h5>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row ">
+                                                <div class="personal-activity col-lg-6">
+                                                    <div class="personal-icons">
+                                                        <i class="feather-user"></i>
+                                                    </div>
+                                                    <div class="views-personal">
+                                                        <h4>Enabled</h4>
+                                                        <h5 th:text="${student.account.enabled}"></h5>
+                                                        <button th:if="${student.account.enabled}" class="btn btn-sm btn-primary">disable</button>
+                                                        <button th:if="${not student.account.enabled}" class="btn btn-sm btn-primary">enable</button>
+                                                    </div>
+                                                </div>
+                                                <div class="personal-activity col-lg-6">
+                                                    <div class="personal-icons">
+                                                        <i class="feather-user"></i>
+                                                    </div>
+                                                    <div class="views-personal">
+                                                        <h4>Locked</h4>
+                                                        <h5 th:text="${student.account.locked}"></h5>
+                                                        <button th:if="${student.account.locked}" class="btn btn-sm btn-primary">unlock</button>
+                                                        <button th:if="${not student.account.locked}" class="btn btn-sm btn-primary">lock</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="personal-activity">
+                                                <div class="personal-icons">
+                                                    <i class="feather-user"></i>
+                                                </div>
+                                                <div class="views-personal">
+                                                    <h4>Password</h4>
+                                                    <button class="btn btn-sm btn-primary">Reset password</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="student-personals-grp">
+                                <div class="card mb-0">
+                                    <div class="card-body">
+                                        <div class="heading-detail">
+                                            <h4>Inscriptions:</h4>
+                                        </div>
+                                        <div th:if="${student.account == null}">
+                                            <p>This student doesn't have any inscription yet</p>
+                                        </div>
+                                        <div th:if="${student.account != null}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

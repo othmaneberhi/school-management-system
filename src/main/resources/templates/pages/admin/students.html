@@ -4,80 +4,111 @@
       layout:decorate="~{layouts/wrapper}">
 <head>
     <meta charset="UTF-8">
-    <title>Page 1</title>
+    <title>Schoolio - Students</title>
 </head>
 <body>
 
-<li layout:fragment="pageBreadcrumb">
-    Students
-</li>
-<h1 layout:fragment="pageTitle">
-    Students
-</h1>
 <div layout:fragment="pageContent">
-    <div class="row">
-        <!-- column -->
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <!-- title -->
-                    <div class="d-md-flex">
-                        <div>
-                            <h4 class="card-title">All students </h4>
-                            <h5 class="card-subtitle">list of all students</h5>
-                        </div>
-                        <div class="ms-auto">
-                            <div class="dl">
-                                <select class="form-select shadow-none">
-                                    <option value="0" selected>f1</option>
-                                    <option value="1">f2</option>
-                                </select>
+    <div class="content container-fluid">
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-sub-header">
+                        <h3 class="page-title">Students</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                            <li class="breadcrumb-item active">All Students</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="student-group-form">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search by ID ...">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search by Name ...">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search by Phone ...">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="search-student-btn">
+                        <button type="btn" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table comman-shadow">
+                    <div class="card-body">
+
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">Students</h3>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto download-grp">
+                                    <a th:href="@{'/students/'}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
+                                    <a href="students-grid.html" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
+                                    <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                                    <a th:href="@{'/students/add'}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- title -->
-                    <div class="table-responsive">
-                        <table class="table mb-0 table-hover align-middle text-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-top-0">name</th>
-                                <th class="border-top-0">CIN</th>
-                                <th class="border-top-0">CNE</th>
-                                <th class="border-top-0">Email</th>
-                                <th class="border-top-0">Phone</th>
-                                <th class="border-top-0">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="student : ${students}">
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="m-r-10"><a
-                                                class="btn btn-circle d-flex btn-info text-white">EA</a>
+
+                        <div class="table-responsive">
+                            <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <thead class="student-thread">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Cne</th>
+                                    <th>Cin</th>
+                                    <th>Birthdate</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="student : ${students}">
+                                    <td th:text="${student.id}"></td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id}}" th:text="${student.lastName+' '+student.firstName}">Aaliyah</a>
+                                        </h2>
+                                    </td>
+                                    <td th:text="${student.cne}"></td>
+                                    <td th:text="${student.cin}"></td>
+                                    <td th:text="${#dates.format(student.birthDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${student.phone}"></td>
+                                    <td th:text="${student.email}"></td>
+                                    <td class="text-end">
+                                        <div class="actions ">
+                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id}}" class="btn btn-sm bg-success-light me-2 ">
+                                                <i class="feather-eye"></i>
+                                            </a>
+                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id} + '/edit'} " class="btn btn-sm bg-danger-light">
+                                                <i class="feather-edit"></i>
+                                            </a>
                                         </div>
-                                        <div class="">
-                                            <h4 class="m-b-0 font-16" th:text="${student.lastName}+' '+${student.firstName}"></h4>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td th:text="${student.cin}"></td>
-                                <td th:text="${student.cne}"></td>
-                                <td th:text="${student.email}"></td>
-                                <td th:text="${student.phone}"></td>
-                                <td>
-                                    <span class="btn btn-danger btn-circle d-flex align-items-center">
-                                        <i class="mdi mdi-arrow-right-drop-circle fs-4 text-white" ></i>
-                                    </span>
-                                </td>
-<!--                                <td>-->
-<!--                                    <label class="badge bg-danger">Angular</label>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <h5 class="m-b-0">$2850.06</h5>-->
-<!--                                </td>-->
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

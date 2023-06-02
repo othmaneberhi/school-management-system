@@ -21,11 +21,15 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
 
     private static final String[] WHITELIST = {
             "/",
-            "/assets/**",
-            "/dist/**",
-            "/src/**",
             "/login**",
             "/register**",
+            "/assets/**",
+            "/js/**",
+            "/bootstrap/**",
+            "/css/**",
+            "/img/**",
+
+            "/admin/**" // for dev only
     };
 
 
@@ -37,7 +41,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/teacher/**").hasRole("TEACHER")
                 .antMatchers("/administrator/**").hasRole("ADMINISTRATOR")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -1,40 +1,41 @@
 <!DOCTYPE html>
-<html dir="ltr">
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Schoolio - 403</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <!-- Custom CSS -->
-    <link th:href="@{dist/css/style.min.css}" rel="stylesheet">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Preskool - accessdenied</title>
 
-<body>
+    <link rel="shortcut icon" th:href="@{/assets/img/favicon.png}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/plugins/feather/feather.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/plugins/icons/flags/flags.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/plugins/fontawesome/css/fontawesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/plugins/fontawesome/css/all.min.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body class="error-page">
+
 <div class="main-wrapper">
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
     <div class="error-box">
-        <div class="error-body text-center">
-            <h1 class="error-title text-danger">403</h1>
-            <h3 class="text-uppercase error-subtitle">ACCESS DENIED !</h3>
-            <p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>
-            <a href="../" class="btn btn-danger btn-rounded waves-effect waves-light m-b-40 text-white">Back to home</a>
-        </div>
+        <h1>403</h1>
+        <h3 class="h2 mb-3"><i class="fas fa-exclamation-triangle"></i> Oops! access denied!</h3>
+        <p class="h4 font-weight-normal">you are not authorized</p>
+        <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
 </div>
 
-<script th:src="@{assets/libs/jquery/dist/jquery.min.js}"></script>
-<script th:src="@{assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-<script>
-    $(".preloader").fadeOut();
-</script>
-</body>
 
+<script th:src="@{/assets/js/jquery-3.6.0.min.js}"></script>
+
+<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<script th:src="@{/assets/js/script.js}"></script>
+</body>
 </html>
