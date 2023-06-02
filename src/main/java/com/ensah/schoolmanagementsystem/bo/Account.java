@@ -107,4 +107,20 @@ public class Account {
     public void setCredentialsExpired(boolean credentialsExpired) {
         isCredentialsExpired = credentialsExpired;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", user=" + user +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", enabled=" + enabled +
+                ", expired=" + expired +
+                ", locked=" + locked +
+                ", isCredentialsExpired=" + isCredentialsExpired +
+                ", createdAt=" + createdAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

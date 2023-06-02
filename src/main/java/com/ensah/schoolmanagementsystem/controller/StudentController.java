@@ -1,7 +1,9 @@
 package com.ensah.schoolmanagementsystem.controller;
 
+import com.ensah.schoolmanagementsystem.bo.Account;
 import com.ensah.schoolmanagementsystem.bo.Student;
 import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
+import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import java.util.Optional;
 @Controller
 public class StudentController {
     private final IStudentService studentService;
+    private final IAccountService accountService;
 
-    public StudentController(IStudentService studentService) {
+    public StudentController(IStudentService studentService, IAccountService accountService) {
         this.studentService = studentService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/students")
@@ -34,10 +38,8 @@ public class StudentController {
             throw new NotFoundException("Student not found");
         }
         model.addAttribute("student",student.get());
-        return "pages/admin/student";
-    }
-    @GetMapping("/test")
-    public String test(){
+
+        model.addAttribute("account", new Account());
         return "pages/admin/student";
     }
 }
