@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/wrapper}">
+<head>
+    <meta charset="UTF-8">
+    <title>Page 1</title>
+</head>
+<body>
+
+<li layout:fragment="pageBreadcrumb">
+    Students
+</li>
+<h1 layout:fragment="pageTitle">
+    Students
+</h1>
+<div layout:fragment="pageContent">
+    <div class="row">
+        <!-- column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- title -->
+                    <div class="d-md-flex">
+                        <div>
+                            <h4 class="card-title">username </h4>
+                            <h5 class="card-subtitle">details aboute ssss</h5>
+                        </div>
+                        <div class="ms-auto">
+                           buttons
+                        </div>
+                    </div>
+                    <!-- title -->
+                    <p th:text="student.firstName">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

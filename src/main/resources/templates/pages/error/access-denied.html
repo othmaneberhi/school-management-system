@@ -9,11 +9,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
     <!-- Custom CSS -->
-    <link href="../dist/css/style.min.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link th:href="@{dist/css/style.min.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -34,8 +30,8 @@
     </div>
 </div>
 
-<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 <script>
     $(".preloader").fadeOut();
 </script>
