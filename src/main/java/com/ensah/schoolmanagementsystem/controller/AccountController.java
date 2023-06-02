@@ -62,6 +62,9 @@ public class AccountController {
         if(role==null){
             throw new NotFoundException("Role "+roleName+" not found");
         }
+        if(user.get().getAccount()!=null){
+            return "redirect:/admin/students/"+user_id;
+        }
         Account account = new Account();
         account.setUser(user.get());
         account.setRole(role);
