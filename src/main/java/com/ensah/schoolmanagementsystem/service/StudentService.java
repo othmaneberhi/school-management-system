@@ -49,4 +49,20 @@ public class StudentService implements IStudentService{
     public Optional<Student> getStudentByEmail(String email) {
         return Optional.ofNullable(studentRepository.findByEmailEquals(email));
     }
+
+    @Override
+    public List<Student> getAllStudentsBySimilarName(String name) {
+        return studentRepository.findBySimilarName(name);
+    }
+
+    @Override
+    public List<Student> getAllStudentsBySimilarPhone(String phone) {
+        return studentRepository.findByPhoneContaining(phone);
+    }
+
+    @Override
+    public List<Student> getAllStudentsBySimilarEmail(String email) {
+        return studentRepository.findByEmailContaining(email);
+    }
+
 }

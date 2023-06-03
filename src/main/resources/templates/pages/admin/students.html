@@ -26,28 +26,31 @@
         </div>
 
         <div class="student-group-form">
+            <form method="post" th:action="@{/admin/students/search}">
             <div class="row">
+
                 <div class="col-lg-3 col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search by ID ...">
+                        <input type="text" name="name" class="form-control" placeholder="Search by Name ...">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search by Name ...">
+                        <input type="text" name="email" class="form-control" placeholder="Search by Email ...">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search by Phone ...">
+                        <input type="text" name="phone" class="form-control" placeholder="Search by Phone ...">
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="search-student-btn">
-                        <button type="btn" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-sm-12">

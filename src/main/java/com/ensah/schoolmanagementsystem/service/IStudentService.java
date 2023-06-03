@@ -15,4 +15,9 @@ public interface IStudentService {
     public void deleteStudent(Student student);
     public List<Student> getAllStudentsByOrderByLastName();
     public Optional<Student> getStudentByEmail(String email);
+
+    public List<Student> getAllStudentsBySimilarName(String name);
+
+    List<Student> getAllStudentsBySimilarPhone(String phone);
+    List<Student> getAllStudentsBySimilarEmail(String phone);
 }

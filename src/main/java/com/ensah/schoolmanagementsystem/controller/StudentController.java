@@ -13,8 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RequestMapping("/admin")
@@ -126,7 +126,7 @@ public class StudentController {
         return "redirect:/admin/students/"+newStudent.getId();
     }
 
-    @GetMapping("/students/{id}/delete")
+    @PostMapping("/students/{id}/delete")
     public String studentDelete(@PathVariable("id") Long id){
         Optional<Student> student = studentService.getStudentById(id);
         if(student.isEmpty()){
@@ -137,6 +137,31 @@ public class StudentController {
             accountService.deleteAccount(account);
         }
         studentService.deleteStudent(student.get());
-        return "redirect:/students";
+        return "pages/admin/students";
+    }
+
+    @PostMapping("/students/search")
+    public String searchStudents(@RequestParam(required = false,name="email") String email,
+                                 @RequestParam(required = false,name="name") String name,
+                                 @RequestParam(required = false,name="phone") String phone,
+                                 Model model){
+
+
+
+        List<Student> students = new ArrayList<Student>();
+        if(!email.isEmpty()){
+            students.addAll(studentService.getAllStudentsBySimilarEmail(email));
+        }
+        if( !name.isEmpty()){
+            students.addAll(studentService.getAllStudentsBySimilarName(name));
+        }
+        if( !phone.isEmpty()){
+            students.addAll(studentService.getAllStudentsBySimilarPhone(phone));
+        }
+        if(email.isEmpty() && name.isEmpty() && phone.isEmpty()){
+            students = studentService.getAllStudentsByOrderByLastName();
+        }
+        model.addAttribute("students",students);
+        return "pages/admin/students";
     }
 }
