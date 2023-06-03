@@ -123,6 +123,6 @@ public class StudentController {
 
         studentService.addStudent(newStudent);
         redirectAttributes.addFlashAttribute("studentCreatedMessage","Student created successfully");
-        return "redirect:/"+newStudent.getId();
+        return "redirect:/admin/students/"+newStudent.getId();
     }
 }

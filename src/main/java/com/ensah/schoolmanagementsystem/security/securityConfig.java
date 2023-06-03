@@ -44,7 +44,7 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(WHITELIST).permitAll()
                 .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/teacher/**").hasRole("TEACHER")
-                .antMatchers("/administrator/**").hasRole("ADMINISTRATOR")
+                .antMatchers("/school-administrator/**").hasRole("ADMINISTRATOR")
 //                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
