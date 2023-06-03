@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IStudentRepository extends JpaRepository<Student,Long> {
     public List<Student> findAllByOrderByLastName();
+    public Student findByEmailEquals(String email);
 }

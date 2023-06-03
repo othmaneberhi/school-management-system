@@ -44,4 +44,9 @@ public class StudentService implements IStudentService{
     public List<Student> getAllStudentsByOrderByLastName() {
         return studentRepository.findAllByOrderByLastName();
     }
+
+    @Override
+    public Optional<Student> getStudentByEmail(String email) {
+        return Optional.ofNullable(studentRepository.findByEmailEquals(email));
+    }
 }

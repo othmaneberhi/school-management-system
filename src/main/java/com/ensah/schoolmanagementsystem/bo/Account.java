@@ -107,7 +107,6 @@ public class Account {
     public void setCredentialsExpired(boolean credentialsExpired) {
         isCredentialsExpired = credentialsExpired;
     }
-
     @Override
     public String toString() {
         return "Account{" +

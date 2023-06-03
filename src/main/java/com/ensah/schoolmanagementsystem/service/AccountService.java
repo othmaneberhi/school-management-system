@@ -4,6 +4,9 @@ import com.ensah.schoolmanagementsystem.bo.Account;
 import com.ensah.schoolmanagementsystem.repository.IAccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AccountService implements IAccountService{
     private final IAccountRepository accountRepository;
@@ -15,5 +18,20 @@ public class AccountService implements IAccountService{
     @Override
     public void addAccount(Account account) {
         this.accountRepository.save(account);
+    }
+
+    @Override
+    public Optional<Account> getAccountById(Long id) {
+        return accountRepository.findById(id);
+    }
+
+    @Override
+    public void updateAccount(Account account) {
+        accountRepository.save(account);
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
     }
 }

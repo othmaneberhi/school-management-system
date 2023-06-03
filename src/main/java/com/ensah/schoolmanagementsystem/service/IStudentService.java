@@ -14,4 +14,5 @@ public interface IStudentService {
 
     public void deleteStudent(Student student);
     public List<Student> getAllStudentsByOrderByLastName();
+    public Optional<Student> getStudentByEmail(String email);
 }

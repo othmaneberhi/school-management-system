@@ -2,6 +2,7 @@ package com.ensah.schoolmanagementsystem.controller;
 
 import com.ensah.schoolmanagementsystem.bo.Account;
 import com.ensah.schoolmanagementsystem.bo.Role;
+import com.ensah.schoolmanagementsystem.bo.Student;
 import com.ensah.schoolmanagementsystem.bo.User;
 import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,12 +54,12 @@ public class AccountController {
     @PostMapping("/create-account/{id}")
     public String createAccount(HttpServletRequest request,
                                 @PathVariable("id") Long user_id,
+                                @RequestParam("roleName") String roleName,
                                 RedirectAttributes redirectAttributes){
         Optional<User> user = userService.getUserById(user_id);
         if(user.isEmpty()){
             throw new NotFoundException("User not found");
         }
-        String roleName = request.getParameter("roleName");
         Role role = roleService.getRoleByRoleName(roleName);
         if(role==null){
             throw new NotFoundException("Role "+roleName+" not found");
@@ -82,4 +84,69 @@ public class AccountController {
         redirectAttributes.addFlashAttribute("accountCreated",accountCreated);
         return "redirect:/admin/students/"+user_id;
     }
+
+//    @PostMapping("/account/{id}/enabled")
+//    public String setEnabled(@PathVariable("id")Long id,
+//                             @RequestParam("enable") boolean enable){
+//        Optional<Account> account = accountService.getAccountById(id);
+//        if(account.isEmpty()){
+//            throw new NotFoundException("account not found");
+//        }
+//        account.get().setEnabled(enable);
+//        accountService.updateAccount(account.get());
+//        return "redirect:/admin/students/"+account.get().getUser().getId();
+//    }
+
+//    @GetMapping("/accounts/{id}/edit")
+//    public String accountEditPage(Model model,
+//                                  @PathVariable("id") Long id){
+//        Optional<Account> account = accountService.getAccountById(id);
+//        if(account.isEmpty()){
+//            throw new NotFoundException("Account not found");
+//        }
+//        model.addAttribute("account", account);
+//
+//        return "accounts/edit-account";
+//    }
+
+    @PostMapping("/accounts/{id}/edit")
+    public String accountEdit(@PathVariable("id") Long id,
+                              @Valid @ModelAttribute("account") Account newAccount,
+                              BindingResult result,
+                              RedirectAttributes redirectAttributes,
+                              HttpServletRequest request){
+        String sourceUrl = request.getHeader("Referer");
+        if(result.hasErrors()){
+            return "redirect:" + sourceUrl;
+        }
+        Optional<Account> account = accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("Account not found");
+        }
+
+        account.get().setEnabled(newAccount.isEnabled());
+        account.get().setRole(newAccount.getRole());
+        account.get().setLocked(newAccount.isLocked());
+        accountService.updateAccount(account.get());
+
+        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account updated successfully");
+        return "redirect:" + sourceUrl;
+    }
+
+//    @GetMapping("/accounts")
+//    public String accounts(Model model){
+//       List<Account> accountList = accountService.getAllAccounts();
+//       model.addAttribute("accounts",accountList);
+//        return "accounts/accounts";
+//    }
+//    @GetMapping("/accounts/{id}")
+//    public String account(@PathVariable("id")Long id,
+//                          Model model){
+//        Optional<Account> account = accountService.getAccountById(id);
+//        if(account.isEmpty()){
+//            throw new NotFoundException("Account not found");
+//        }
+//        model.addAttribute("account",account);
+//        return "accounts/account";
+//    }
 }

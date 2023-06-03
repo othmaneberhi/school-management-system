@@ -5,6 +5,7 @@ import com.ensah.schoolmanagementsystem.bo.Student;
 import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IStudentService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,10 @@ public class StudentController {
         this.accountService = accountService;
     }
 
+    private Boolean emailUsed(String email){
+        Optional<Student> student = studentService.getStudentByEmail(email);
+        return student.isPresent();
+    }
     @GetMapping("/students")
     public String showStudents(Model model){
         List<Student> studentList = studentService.getAllStudentsByOrderByLastName();
@@ -60,8 +65,14 @@ public class StudentController {
                               @Valid @ModelAttribute("student") Student newStudent,
                               BindingResult result,
                               HttpServletRequest request,
-                              RedirectAttributes redirectAttributes){
+                              RedirectAttributes redirectAttributes,
+                              Model model){
         String sourceUrl = request.getHeader("Referer");
+
+        if (emailUsed(newStudent.getEmail())) {
+            result.rejectValue("email", "invalid.email", "Email already used");
+        }
+
         if(result.hasErrors()){
             return "pages/students/edit-student";
         }
@@ -83,6 +94,7 @@ public class StudentController {
         student.get().setCin(newStudent.getCin());
         student.get().setBirthDate(newStudent.getBirthDate());
         studentService.updateStudent(student.get());
+
 
         redirectAttributes.addFlashAttribute("studentUpdatedMessage","Student's informations updated successfully");
         return "redirect:" + sourceUrl;
