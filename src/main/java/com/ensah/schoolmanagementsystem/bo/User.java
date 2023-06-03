@@ -6,12 +6,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.Date;
 
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SQLDelete(sql = "UPDATE user SET deleted_at=CURRENT_TIMESTAMP id=?")
+@Where(clause = "deleted_at is null")
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
