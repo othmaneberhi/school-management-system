@@ -7,10 +7,12 @@ import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +43,49 @@ public class StudentController {
 
         model.addAttribute("account", new Account());
         return "pages/admin/student";
+    }
+
+    @GetMapping("students/{id}/edit")
+    public String studentEditPage(@PathVariable("id") Long id,
+                                  Model model){
+        Optional<Student> student = studentService.getStudentById(id);
+        if(student.isEmpty()){
+            throw new NotFoundException("Student not found");
+        }
+        model.addAttribute("student",student.get());
+        return "pages/students/edit-student";
+    }
+    @PostMapping("/students/{id}/edit")
+    public String studentEdit(@PathVariable("id") Long id,
+                              @Valid @ModelAttribute("student") Student newStudent,
+                              BindingResult result,
+                              HttpServletRequest request,
+                              RedirectAttributes redirectAttributes){
+        String sourceUrl = request.getHeader("Referer");
+        System.out.println(sourceUrl);
+        if(result.hasErrors()){
+            return "redirect:" + sourceUrl;
+        }
+        Optional<Student> student = studentService.getStudentById(id);
+        if(student.isEmpty()){
+            throw new NotFoundException("Student not found");
+        }
+
+        student.get().setFirstName(newStudent.getFirstName());
+        student.get().setLastName(newStudent.getLastName());
+        student.get().setArabicFirstName(newStudent.getArabicFirstName());
+        student.get().setArabicLastName(newStudent.getArabicLastName());
+        student.get().setEmail(newStudent.getEmail());
+        student.get().setPhone(newStudent.getPhone());
+        student.get().setArabicFirstName(newStudent.getArabicFirstName());
+        student.get().setArabicLastName(newStudent.getArabicLastName());
+        student.get().setPicture(newStudent.getPicture());
+        student.get().setCne(newStudent.getCne());
+        student.get().setCin(newStudent.getCin());
+        student.get().setBirthDate(newStudent.getBirthDate());
+        studentService.updateStudent(student.get());
+
+        redirectAttributes.addFlashAttribute("studentUpdatedMessage","Student updated successfully");
+        return "redirect:" + sourceUrl;
     }
 }

@@ -10,7 +10,7 @@ public class Administrator extends User{
     private String grade;
 
     public Administrator(String firstName, String lastName, String username, String email, String phone, String arabicFirstName, String arabicLastName, String picture, String grade) {
-        super(firstName, lastName, username, email, phone, arabicFirstName, arabicLastName, picture);
+        super(firstName, lastName, email, phone, arabicFirstName, arabicLastName, picture);
         this.grade = grade;
     }
 

@@ -33,7 +33,7 @@ public class Teacher extends User{
     }
 
     public Teacher(String firstName, String lastName, String username, String email, String phone, String arabicFirstName, String arabicLastName, String picture, String specialization) {
-        super(firstName, lastName, username, email, phone, arabicFirstName, arabicLastName, picture);
+        super(firstName, lastName, email, phone, arabicFirstName, arabicLastName, picture);
         this.specialization = specialization;
     }
 

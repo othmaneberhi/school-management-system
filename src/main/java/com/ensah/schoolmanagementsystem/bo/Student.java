@@ -51,8 +51,8 @@ public class Student extends User{
         this.inscription = inscription;
     }
 
-    public Student(String firstName, String lastName, String username, String email, String phone, String arabicFirstName, String arabicLastName, String picture, String cne, Date birthDate) {
-        super(firstName, lastName, username, email, phone, arabicFirstName, arabicLastName, picture);
+    public Student(String firstName, String lastName, String email, String phone, String arabicFirstName, String arabicLastName, String picture, String cne, Date birthDate) {
+        super(firstName, lastName, email, phone, arabicFirstName, arabicLastName, picture);
         this.cne = cne;
         this.birthDate = birthDate;
     }

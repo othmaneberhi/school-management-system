@@ -45,7 +45,7 @@ public class User {
     private Date deletedAt = null;
 
 
-    public User(String firstName, String lastName, String username, String email, String phone, String arabicFirstName, String arabicLastName, String picture) {
+    public User(String firstName, String lastName, String email, String phone, String arabicFirstName, String arabicLastName, String picture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

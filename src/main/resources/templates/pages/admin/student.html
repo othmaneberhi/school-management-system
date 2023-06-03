@@ -27,14 +27,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="about-info">
-                                <h4>Profile <span>
-                                    <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id} + '/edit'} " class="btn bg-danger-light">
-                                        <i class="feather-edit"></i>
-                                    </a></span>
-                                </h4>
-                            </div>
-                            <div class="student-profile-head mt-5">
+                            <div class="student-profile-head mt-2">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4">
                                         <div class="profile-user-box">
@@ -64,8 +57,9 @@
                             <div class="student-personals-grp">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="heading-detail">
-                                            <h4>Personal Details</h4>
+                                        <div class="heading-detail d-flex justify-content-between align-items-start">
+                                            <h4>Personal details</h4>
+                                            <a th:href="@{'/admin/student/'+${student.id}+'/edit'}" class="ms-1 btn btn-sm btn-primary ms-auto"> <i class="feather-edit"></i></a>
                                         </div>
                                         <div class="row ">
                                             <div class="personal-activity col-lg-6">
@@ -168,8 +162,9 @@
                             <div class="student-personals-grp mb-4">
                                 <div class="card mb-0">
                                     <div class="card-body">
-                                        <div class="heading-detail">
+                                        <div class="heading-detail d-flex justify-content-between align-items-start">
                                             <h4>Account details</h4>
+                                            <a th:if="student.account" th:href="@{'/admin/accounts/'+${student.account.id}+'/edit'}" class="ms-1 btn btn-sm btn-primary ms-auto"> <i class="feather-edit"></i></a>
                                         </div>
 
                                         <div th:if="${student.account == null}">
@@ -248,35 +243,31 @@
                                             <div class="row ">
                                                 <div class="personal-activity col-lg-6">
                                                     <div class="personal-icons">
-                                                        <i class="feather-user"></i>
+                                                        <i class="feather-activity"></i>
                                                     </div>
                                                     <div class="views-personal">
-                                                        <h4>Enabled</h4>
-                                                        <h5 th:text="${student.account.enabled}"></h5>
-                                                        <button th:if="${student.account.enabled}" class="btn btn-sm btn-primary">disable</button>
-                                                        <button th:if="${not student.account.enabled}" class="btn btn-sm btn-primary">enable</button>
+                                                        <h4 th:if="${student.account.enabled}">Enabled</h4>
+                                                        <h4 th:if="${not student.account.enabled}">Disabled</h4>
                                                     </div>
                                                 </div>
                                                 <div class="personal-activity col-lg-6">
                                                     <div class="personal-icons">
-                                                        <i class="feather-user"></i>
+                                                        <i class="feather-lock"></i>
                                                     </div>
                                                     <div class="views-personal">
-                                                        <h4>Locked</h4>
-                                                        <h5 th:text="${student.account.locked}"></h5>
-                                                        <button th:if="${student.account.locked}" class="btn btn-sm btn-primary">unlock</button>
-                                                        <button th:if="${not student.account.locked}" class="btn btn-sm btn-primary">lock</button>
+                                                        <h4 th:if="${student.account.locked}" >Locked</h4>
+                                                        <h4 th:if="${not student.account.locked}">Unlocked</h4>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <div class="personal-activity">
+                                            <div class="personal-activity d-flex align-items-center">
                                                 <div class="personal-icons">
                                                     <i class="feather-user"></i>
                                                 </div>
-                                                <div class="views-personal">
+                                                <div class="views-personal d-flex align-items-center">
                                                     <h4>Password</h4>
-                                                    <button class="btn btn-sm btn-primary">Reset password</button>
+                                                    <a  th:href="@{'/admin/accounts/'+${student.account.id}+'/reset-password'}" class="ms-1 btn btn-sm btn-primary"> <i class="feather-refresh-cw"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -290,10 +281,10 @@
                                         <div class="heading-detail">
                                             <h4>Inscriptions:</h4>
                                         </div>
-                                        <div th:if="${student.account == null}">
+                                        <div th:if="${student.inscription == null}">
                                             <p>This student doesn't have any inscription yet</p>
                                         </div>
-                                        <div th:if="${student.account != null}">
+                                        <div th:if="${student.inscription != null}">
 
                                         </div>
                                     </div>
