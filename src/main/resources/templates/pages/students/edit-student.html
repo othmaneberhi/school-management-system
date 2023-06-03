@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/wrapper}">
+<head>
+  <meta charset="UTF-8">
+  <title>Schoolio - Student</title>
+</head>
+<body>
+
+<div layout:fragment="pageContent">
+  <div class="content container-fluid">
+
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col-sm-12">
+          <div class="page-sub-header">
+            <h3 class="page-title">Edit Students</h3>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a>Student</a></li>
+              <li class="breadcrumb-item active">Edit Student</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card comman-shadow">
+          <div class="card-body">
+            <form th:object="${student}" th:action="@{${#httpServletRequest.requestURI}}" method="POST">
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="form-title student-info">Student Information </h5>
+                </div>
+                <div class="row mb-2" th:if="${studentUpdatedMessage}">
+                  <div class="col-6 mx-auto alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${studentUpdatedMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="form-group local-forms">
+                    <label>First Name <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{firstName}">
+                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="form-group local-forms">
+                    <label>Last Name <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{lastName}">
+                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="form-group local-forms">
+                    <label>Arabic first Name <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{arabicFirstName}">
+                    <span th:if="${#fields.hasErrors('arabicFirstName')}" th:errors="*{arabicFirstName}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                  <div class="form-group local-forms">
+                    <label>Arabic last Name <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{arabicLastName}">
+                    <span th:if="${#fields.hasErrors('arabicLastName')}" th:errors="*{arabicLastName}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="form-group local-forms">
+                    <label>E-Mail <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{email}">
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="form-group local-forms">
+                    <label>Phone <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{phone}">
+                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="form-group local-forms calendar-icon">
+                    <label>Date Of Birth <span class="login-danger">*</span></label>
+                    <input class="form-control datetimepicker" type="text" th:field="*{birthDate}" placeholder="YYYY-MM-DD">
+                    <span class="text-danger"  th:if="${#fields.hasErrors('birthDate')}">Please provide a valid birthdate (YYYY-MM-DD)</span>
+
+
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group local-forms">
+                    <label>CIN <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{cin}">
+                    <span th:if="${#fields.hasErrors('cin')}" th:errors="*{cin}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group local-forms">
+                    <label>CNE <span class="login-danger">*</span></label>
+                    <input class="form-control" type="text" th:field="*{cne}">
+                    <span th:if="${#fields.hasErrors('cne')}" th:errors="*{cne}" class="text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12">
+                  <div class="form-group students-up-files">
+                    <label>Upload Student Photo (150px X 150px)</label>
+                    <div class="uplod">
+                      <label class="file-upload image-upbtn mb-0">
+                        Choose File <input type="file">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="student-submit">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

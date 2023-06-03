@@ -12,4 +12,5 @@ public interface IAccountService {
     public void updateAccount(Account account);
 
     public List<Account> getAllAccounts();
+    public void deleteAccount(Account account);
 }

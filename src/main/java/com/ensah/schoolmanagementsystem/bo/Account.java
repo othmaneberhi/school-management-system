@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@SQLDelete(sql = "UPDATE account SET deleted_at=CURRENT_TIMESTAMP id=?")
+@SQLDelete(sql = "UPDATE account SET deleted_at=CURRENT_TIMESTAMP WHERE id=?")
 @Where(clause = "deleted_at is null")
 public class Account {
     @Id

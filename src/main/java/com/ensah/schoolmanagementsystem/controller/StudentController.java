@@ -125,4 +125,18 @@ public class StudentController {
         redirectAttributes.addFlashAttribute("studentCreatedMessage","Student created successfully");
         return "redirect:/admin/students/"+newStudent.getId();
     }
+
+    @GetMapping("/students/{id}/delete")
+    public String studentDelete(@PathVariable("id") Long id){
+        Optional<Student> student = studentService.getStudentById(id);
+        if(student.isEmpty()){
+            throw new NotFoundException("Student not found");
+        }
+        Account account = student.get().getAccount();
+        if(account!=null){
+            accountService.deleteAccount(account);
+        }
+        studentService.deleteStudent(student.get());
+        return "redirect:/students";
+    }
 }

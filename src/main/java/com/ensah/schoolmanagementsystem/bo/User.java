@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@SQLDelete(sql = "UPDATE user SET deleted_at=CURRENT_TIMESTAMP id=?")
+@SQLDelete(sql = "UPDATE user SET deleted_at=CURRENT_TIMESTAMP WHERE id=?")
 @Where(clause = "deleted_at is null")
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

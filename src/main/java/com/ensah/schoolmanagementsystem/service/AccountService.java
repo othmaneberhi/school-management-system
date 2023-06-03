@@ -34,4 +34,9 @@ public class AccountService implements IAccountService{
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
+
+    @Override
+    public void deleteAccount(Account account) {
+        accountRepository.delete(account);
+    }
 }
