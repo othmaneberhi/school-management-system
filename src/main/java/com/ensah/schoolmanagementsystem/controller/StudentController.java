@@ -5,7 +5,6 @@ import com.ensah.schoolmanagementsystem.bo.Student;
 import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IStudentService;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequestMapping("/admin")
@@ -28,9 +28,10 @@ public class StudentController {
         this.accountService = accountService;
     }
 
-    private Boolean emailUsed(String email){
-        Optional<Student> student = studentService.getStudentByEmail(email);
-        return student.isPresent();
+    private Boolean emailUsed(Student newStudent){
+        Optional<Student> student = studentService.getStudentByEmail(newStudent.getEmail());
+
+        return student.isPresent() && !(student.get().getId().equals(newStudent.getId()));
     }
     @GetMapping("/students")
     public String showStudents(Model model){
@@ -65,11 +66,10 @@ public class StudentController {
                               @Valid @ModelAttribute("student") Student newStudent,
                               BindingResult result,
                               HttpServletRequest request,
-                              RedirectAttributes redirectAttributes,
-                              Model model){
+                              RedirectAttributes redirectAttributes){
         String sourceUrl = request.getHeader("Referer");
 
-        if (emailUsed(newStudent.getEmail())) {
+        if (emailUsed(newStudent)) {
             result.rejectValue("email", "invalid.email", "Email already used");
         }
 
@@ -98,5 +98,31 @@ public class StudentController {
 
         redirectAttributes.addFlashAttribute("studentUpdatedMessage","Student's informations updated successfully");
         return "redirect:" + sourceUrl;
+    }
+
+    @GetMapping("students/add")
+    public String studentAddPage(Model model){
+        model.addAttribute("student",new Student());
+        return "pages/students/add-student";
+    }
+
+    @PostMapping("/students/add")
+    public String studentEdit(@Valid @ModelAttribute("student") Student newStudent,
+                              BindingResult result,
+                              HttpServletRequest request,
+                              RedirectAttributes redirectAttributes){
+        String sourceUrl = request.getHeader("Referer");
+
+        if (emailUsed(newStudent)) {
+            result.rejectValue("email", "invalid.email", "Email already used");
+        }
+
+        if(result.hasErrors()){
+            return "pages/students/add-student";
+        }
+
+        studentService.addStudent(newStudent);
+        redirectAttributes.addFlashAttribute("studentCreatedMessage","Student created successfully");
+        return "redirect:/"+newStudent.getId();
     }
 }
