@@ -1,6 +1,8 @@
 package com.ensah.schoolmanagementsystem.bo;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.persistence.Id;
@@ -8,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@SQLDelete(sql = "UPDATE account SET deleted_at=CURRENT_TIMESTAMP id=?")
+@Where(clause = "deleted_at is null")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
