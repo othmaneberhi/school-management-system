@@ -12,7 +12,7 @@ import java.util.Date;
 @PrimaryKeyJoinColumn(name="studentId")
 public class Student extends User{
     @NotBlank(message = "please provide a cne")
-    @Pattern(regexp = "^[A-Za-z]{1}\\d{9}$", message = "Wrong Cne format)")
+    @Pattern(regexp = "^[A-Za-z]{1}\\d{9}$", message = "Wrong Cne format")
     private String cne;
 
     @NotNull(message = "Please provide a birthdate")

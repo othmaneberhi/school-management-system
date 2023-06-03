@@ -3,6 +3,7 @@ package com.ensah.schoolmanagementsystem.bo;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,20 +21,23 @@ public class User {
     @JoinColumn(name="account_id")
     private Account account;
     @NotBlank(message = "Please enter a CIN")
-    @Pattern(regexp = "^[A-Za-z]{2}\\d{6}$", message = "Wrong CIN format)")
+    @Pattern(regexp = "^[A-Za-z]{2}\\d{6}$", message = "Wrong CIN format")
     private String cin;
     @NotBlank(message = "Please enter a firstname")
     private String firstName;
     @NotBlank(message = "Please enter a lastname")
     private String lastName;
     @Email(message = "Please provide a valid email")
+    @NotNull(message = "Please enter an email")
     @Column(unique = true)
     private String email;
     @NotBlank(message = "Please enter a phone number")
     @Pattern(regexp = "^06\\d{8}$", message = "Wrong phone number format, expected (06 ## ## ## ##)")
     private String phone;
+    @NotBlank(message = "Please enter an arabic firstname")
     @Pattern(regexp = "\\p{InArabic}+", message = "This field must be in Arabic")
     private String arabicFirstName;
+    @NotBlank(message = "Please enter an arabic lastname")
     @Pattern(regexp = "\\p{InArabic}+", message = "This field must be in Arabic")
     private String arabicLastName;
     private String picture;

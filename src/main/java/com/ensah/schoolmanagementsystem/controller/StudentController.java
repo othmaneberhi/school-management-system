@@ -62,9 +62,8 @@ public class StudentController {
                               HttpServletRequest request,
                               RedirectAttributes redirectAttributes){
         String sourceUrl = request.getHeader("Referer");
-        System.out.println(sourceUrl);
         if(result.hasErrors()){
-            return "redirect:" + sourceUrl;
+            return "pages/students/edit-student";
         }
         Optional<Student> student = studentService.getStudentById(id);
         if(student.isEmpty()){
@@ -85,7 +84,7 @@ public class StudentController {
         student.get().setBirthDate(newStudent.getBirthDate());
         studentService.updateStudent(student.get());
 
-        redirectAttributes.addFlashAttribute("studentUpdatedMessage","Student updated successfully");
+        redirectAttributes.addFlashAttribute("studentUpdatedMessage","Student's informations updated successfully");
         return "redirect:" + sourceUrl;
     }
 }
