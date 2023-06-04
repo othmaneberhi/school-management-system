@@ -22,4 +22,5 @@ public interface IStudentRepository extends JpaRepository<Student,Long> {
 
     public List<Student> findByPhoneContaining(String phone);
     public List<Student> findByEmailContaining(String email);
+    public List<Student> findByCneContaining(String cne);
 }

@@ -144,6 +144,7 @@ public class StudentController {
     public String searchStudents(@RequestParam(required = false,name="email") String email,
                                  @RequestParam(required = false,name="name") String name,
                                  @RequestParam(required = false,name="phone") String phone,
+                                 @RequestParam(required = false,name="cne") String cne,
                                  Model model){
 
 
@@ -158,7 +159,10 @@ public class StudentController {
         if( !phone.isEmpty()){
             students.addAll(studentService.getAllStudentsBySimilarPhone(phone));
         }
-        if(email.isEmpty() && name.isEmpty() && phone.isEmpty()){
+        if( !cne.isEmpty()){
+            students.addAll(studentService.getAllStudentsBySimilarCne(cne));
+        }
+        if(cne.isEmpty() && email.isEmpty() && name.isEmpty() && phone.isEmpty()){
             students = studentService.getAllStudentsByOrderByLastName();
         }
         model.addAttribute("students",students);

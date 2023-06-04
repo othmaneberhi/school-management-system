@@ -65,4 +65,9 @@ public class StudentService implements IStudentService{
         return studentRepository.findByEmailContaining(email);
     }
 
+    @Override
+    public List<Student> getAllStudentsBySimilarCne(String cne) {
+        return studentRepository.findByCneContaining(cne);
+    }
+
 }

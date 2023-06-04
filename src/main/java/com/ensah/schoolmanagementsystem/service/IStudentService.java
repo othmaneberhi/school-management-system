@@ -2,6 +2,7 @@ package com.ensah.schoolmanagementsystem.service;
 
 import com.ensah.schoolmanagementsystem.bo.Student;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,6 @@ public interface IStudentService {
 
     List<Student> getAllStudentsBySimilarPhone(String phone);
     List<Student> getAllStudentsBySimilarEmail(String phone);
+
+    List<Student> getAllStudentsBySimilarCne(String cne);
 }
