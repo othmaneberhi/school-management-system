@@ -8,6 +8,7 @@ import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IRoleService;
 import com.ensah.schoolmanagementsystem.service.IUserService;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RequestMapping("/admin")
 @Controller
@@ -50,6 +48,11 @@ public class AccountController {
 
         return sb.toString();
     }
+
+    public boolean isRoleNameValid(String roleName) {
+        return roleName != null && (roleName.equals("ROLE_STUDENT") || roleName.equals("ROLE_TEACHER") || roleName.equals("ROLE_SCHOOL_ADMINISTRATOR"));
+    }
+
 
     @PostMapping("/create-account/{id}")
     public String createAccount(HttpServletRequest request,
@@ -85,53 +88,76 @@ public class AccountController {
         return "redirect:/admin/students/"+user_id;
     }
 
-//    @PostMapping("/account/{id}/enabled")
-//    public String setEnabled(@PathVariable("id")Long id,
-//                             @RequestParam("enable") boolean enable){
-//        Optional<Account> account = accountService.getAccountById(id);
-//        if(account.isEmpty()){
-//            throw new NotFoundException("account not found");
-//        }
-//        account.get().setEnabled(enable);
-//        accountService.updateAccount(account.get());
-//        return "redirect:/admin/students/"+account.get().getUser().getId();
-//    }
+    @PostMapping("/accounts/{id}/toggleEnabled")
+    public String setEnabled(@PathVariable("id")Long id,
+                             RedirectAttributes redirectAttributes,
+                             HttpServletRequest request){
+        String sourceUrl = request.getHeader("Referer");
+        Optional<Account> account = accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("account not found");
+        }
+        account.get().setEnabled(!account.get().isEnabled());
+        accountService.updateAccount(account.get());
+        String op = account.get().isEnabled()? "enabled":"disabled";
+        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account "+ op +" successfully");
+        return "redirect:" + sourceUrl;
+    }
 
-//    @GetMapping("/accounts/{id}/edit")
-//    public String accountEditPage(Model model,
-//                                  @PathVariable("id") Long id){
+    @PostMapping("/accounts/{id}/setRole")
+    public String setRole(@PathVariable("id")Long id,@RequestParam(value = "role",required = true) String roleName, RedirectAttributes redirectAttributes,
+                             HttpServletRequest request){
+        String sourceUrl = request.getHeader("Referer");
+        if (!isRoleNameValid(roleName)) {
+            throw new NotFoundException("Role not found");
+        }
+        Optional<Account> account = accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("account not found");
+        }
+        Optional<Role> role = Optional.ofNullable(roleService.getRoleByRoleName(roleName));
+        if(role.isEmpty()){
+            throw new NotFoundException("Role not found");
+        }
+
+        account.get().setRole(role.get());
+        accountService.updateAccount(account.get());
+        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account's role updated successfully");
+        return "redirect:" + sourceUrl;
+    }
+
+
+//    @PostMapping("/accounts/{id}/edit")
+//    public String accountEdit(@PathVariable("id") Long id,
+//                              @RequestParam(name = "role",required = true) String roleName,
+//                              @RequestParam(name = "enable", required = false, defaultValue = "false") Boolean enabled,
+//
+//                              RedirectAttributes redirectAttributes,
+//                              HttpServletRequest request){
+//        String sourceUrl = request.getHeader("Referer");
+//        if (!isRoleNameValid(roleName)) {
+//            throw new NotFoundException("Role not found");
+//        }
 //        Optional<Account> account = accountService.getAccountById(id);
 //        if(account.isEmpty()){
 //            throw new NotFoundException("Account not found");
 //        }
-//        model.addAttribute("account", account);
 //
-//        return "accounts/edit-account";
+//        Optional<Role> role = Optional.ofNullable(roleService.getRoleByRoleName(roleName));
+//        if(role.isEmpty()){
+//            throw new NotFoundException("Role not found");
+//        }
+//
+//
+//        System.out.println(enabled);
+//        account.get().setEnabled(enabled);
+//        account.get().setRole(role.get());
+////        accountService.updateAccount(account.get());
+//
+//        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account updated successfully");
+//        return "redirect:" + sourceUrl;
 //    }
 
-    @PostMapping("/accounts/{id}/edit")
-    public String accountEdit(@PathVariable("id") Long id,
-                              @Valid @ModelAttribute("account") Account newAccount,
-                              BindingResult result,
-                              RedirectAttributes redirectAttributes,
-                              HttpServletRequest request){
-        String sourceUrl = request.getHeader("Referer");
-        if(result.hasErrors()){
-            return "redirect:" + sourceUrl;
-        }
-        Optional<Account> account = accountService.getAccountById(id);
-        if(account.isEmpty()){
-            throw new NotFoundException("Account not found");
-        }
-
-        account.get().setEnabled(newAccount.isEnabled());
-        account.get().setRole(newAccount.getRole());
-        account.get().setLocked(newAccount.isLocked());
-        accountService.updateAccount(account.get());
-
-        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account updated successfully");
-        return "redirect:" + sourceUrl;
-    }
 
 //    @GetMapping("/accounts")
 //    public String accounts(Model model){

@@ -74,8 +74,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" th:if="${searchMsg}">
+                            <p class="text-dark fw-bold" th:text="${searchMsg}"></p>
+                        </div>
 
-                        <div class="table-responsive">
+                        <div th:if="${#lists.isEmpty(students)}" class="row text-center my-2 fw-bold" >
+                            <h5>No student found !</h5>
+                        </div>
+
+                        <div th:if="${not #lists.isEmpty(students)}" class="table-responsive">
                             <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                 <thead class="student-thread">
                                 <tr>
@@ -104,11 +111,14 @@
                                     <td th:text="${student.email}"></td>
                                     <td class="text-end">
                                         <div class="actions ">
-                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id}}" class="btn btn-sm bg-success-light me-2 ">
+                                            <a th:href="@{'/' + ${student.id}}" class="btn btn-sm bg-success-light me-2 ">
                                                 <i class="feather-eye"></i>
                                             </a>
-                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id} + '/edit'} " class="btn btn-sm bg-danger-light">
+                                            <a th:href="@{'/' + ${student.id} + '/edit'} " class="btn btn-sm bg-danger-light">
                                                 <i class="feather-edit"></i>
+                                            </a>
+                                            <a th:href="@{'/' + ${student.id} + '/delete'} " class="btn btn-sm bg-danger-light">
+                                                <i class="feather-x"></i>
                                             </a>
                                         </div>
                                     </td>

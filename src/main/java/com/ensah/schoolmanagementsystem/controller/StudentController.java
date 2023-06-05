@@ -165,6 +165,7 @@ public class StudentController {
         if(cne.isEmpty() && email.isEmpty() && name.isEmpty() && phone.isEmpty()){
             students = studentService.getAllStudentsByOrderByLastName();
         }
+        model.addAttribute("searchMsg","Showing results of search ("+students.size()+")");
         model.addAttribute("students",students);
         return "pages/admin/students";
     }

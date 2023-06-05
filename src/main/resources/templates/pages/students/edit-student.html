@@ -26,7 +26,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-8">
         <div class="card comman-shadow">
           <div class="card-body">
             <form th:object="${student}" th:action="@{${#httpServletRequest.requestURI}}" method="POST">
@@ -40,28 +40,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                 </div>
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-6">
                   <div class="form-group local-forms">
                     <label>First Name <span class="login-danger">*</span></label>
                     <input class="form-control" type="text" th:field="*{firstName}">
                     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
                   </div>
                 </div>
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-6">
                   <div class="form-group local-forms">
                     <label>Last Name <span class="login-danger">*</span></label>
                     <input class="form-control" type="text" th:field="*{lastName}">
                     <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
                   </div>
                 </div>
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-6">
                   <div class="form-group local-forms">
                     <label>Arabic first Name <span class="login-danger">*</span></label>
                     <input class="form-control" type="text" th:field="*{arabicFirstName}">
                     <span th:if="${#fields.hasErrors('arabicFirstName')}" th:errors="*{arabicFirstName}" class="text-danger"></span>
                   </div>
                 </div>
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-6">
                   <div class="form-group local-forms">
                     <label>Arabic last Name <span class="login-danger">*</span></label>
                     <input class="form-control" type="text" th:field="*{arabicLastName}">
@@ -122,6 +122,150 @@
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="student-personals-grp mb-4">
+          <div class="card mb-0">
+            <div class="card-body">
+              <div class="heading-detail">
+                <h4>Account details</h4>
+              </div>
+
+              <div th:if="${student.account == null}">
+                <p>This student doesn't have an account yet. Would you like to create one for them?</p>
+                <button type="button" class="btn btn-secondary mt-1" data-bs-toggle="modal" data-bs-target="#centermodal">Set account</button>
+
+                <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myCenterModalLabel">Create account</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form th:action="@{/admin/create-account/{id}(id=${student.id})}" method="post">
+                        <div class="modal-body">
+                          <h5>Set an account for <strong th:text="${student.lastName+' '+student.firstName}"></strong></h5>
+                          <p>Create an account for this student with the role "student". A random password will be generated automatically.</p>
+                          <input type="hidden" name="roleName" value="ROLE_STUDENT">
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-sm btn-primary" type="submit">Create Account</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div th:if="${student.account != null}">
+                <div th:if="${accountCreated != null}" class="row">
+                  <div class="alert alert-success alert-dismissible fade show col-12" role="alert">
+                    <span th:text="${accountCreated.message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+
+                  <div class="personal-activity col-12">
+                    <div class="personal-icons">
+                      <i class="feather-info"></i>
+                    </div>
+                    <div class="views-personal">
+                      <h4>Account credentials</h4>
+                      <p class="text-muted">This section is temporary, make sure to save the account credentials before leaving this page !</p>
+                      <div class="d-flex">
+                        <a class="mb-1 btn btn-sm clip-btn btn-primary" href="javascript:;" data-clipboard-action="copy"
+                           th:attr="data-clipboard-text=${student.email}"><i class="far fa-copy"></i> Copy email</a>
+                        <div class="clipboard copy-txt ms-2">
+                          <a class="mb-1 btn btn-sm clip-btn btn-warning" href="javascript:;" data-clipboard-action="copy"
+                             th:attr="data-clipboard-text=${accountCreated.password}"><i class="far fa-copy"></i> Copy password</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="row " th:if="${accountUpdatedMessage}">
+                      <div class="col-12 mx-auto alert alert-success alert-dismissible fade show" role="alert">
+                          <span th:text="${accountUpdatedMessage}"></span>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                  </div>
+                  <div class="row ">
+                    <div class="personal-activity col-lg-12">
+                      <div class="personal-icons">
+                        <i class="feather-user"></i>
+                      </div>
+                      <div class="views-personal">
+                        <h4>Role</h4>
+                        <form th:action="@{'/admin/accounts/' + ${student.account.id} + '/setRole'}" method="post">
+                        <div class="d-flex align-items-center">
+                          <select class="form-select form-select-sm" id="roleId" name="role" aria-label="Select Role">
+                            <option value="ROLE_STUDENT" th:selected="${student.account.role == 'ROLE_STUDENT'}">Student</option>
+                            <option value="ROLE_TEACHER" th:selected="${student.account.role == 'ROLE_TEACHER'}">Teacher</option>
+                            <option value="ROLE_SCHOOL_ADMINISTRATOR" th:selected="${student.account.role == 'ROLE_SCHOOL_ADMINISTRATOR'}">School administrator</option>
+                          </select>
+                          <button type="submit" class="btn btn-sm btn-primary">Change</button>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row ">
+                    <div class="personal-activity col-lg-6 d-flex">
+                      <div class="personal-icons">
+                        <i class="feather-activity"></i>
+                      </div>
+                      <div class="views-personal">
+                        <h4 th:if="${student.account.enabled}">Enabled</h4>
+                        <h4  th:if="${not student.account.enabled}" >Disabled</h4>
+                        <form th:action="@{'/admin/accounts/' + ${student.account.id} + '/toggleEnabled'}" method="post">
+                          <button type="submit" class="btn btn-sm btn-primary">
+                            <span  th:if="${student.account.enabled}"> Disable</span>
+                            <span  th:if="${not student.account.enabled}"> Enable</span>
+                          </button>
+                        </form>
+
+
+                      </div>
+                    </div>
+                    <div class="personal-activity col-lg-6">
+                      <div class="personal-icons">
+                        <i class="feather-lock"></i>
+                      </div>
+                      <div class="views-personal">
+                        <h4 th:if="${student.account.locked}" >Locked</h4>
+                        <h4 th:if="${not student.account.locked}">Unlocked</h4>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="personal-activity col-lg-6  d-flex align-items-center">
+                      <div class="personal-icons">
+                        <i class="feather-user"></i>
+                      </div>
+                      <div class="views-personal">
+                        <h4>Password</h4>
+                        <a  th:href="@{'/admin/accounts/'+${student.account.id}+'/reset-password'}" class="ms-1 btn btn-sm btn-primary">
+                          Reset
+                        </a>
+                      </div>
+                    </div>
+                    <div class="personal-activity col-lg-6">
+                      <div class="personal-icons">
+                        <i class="feather-user"></i>
+                      </div>
+                      <div class="views-personal">
+                        <h4>Created at</h4>
+                        <h5 th:text="${#dates.format(student.account.createdAt, 'yyyy-MM-dd')}"></h5>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
