@@ -28,11 +28,12 @@
   <div class="header">
 
     <div class="header-left">
-      <a href="/" class="logo">
-        <img th:src="@{/assets/img/logo.png}" alt="Logo">
+      <a href="/" class="logo d-flex justify-content-center align-items-center">
+        <img th:src="@{/assets/img/logo.png}" alt="Logo" width="50" height="50">
+        <h5 class="ms-1 d-none d-md-block mb-0 pb-0 fw-bolder">Schoolio</h5>
       </a>
       <a href="/" class="logo logo-small">
-        <img th:src="@{/assets/img/logo-small.png}" alt="Logo" width="30" height="30">
+        <img th:src="@{/assets/img/logo-small.png}" alt="Logo" width="50" height="50">
       </a>
     </div>
     <div class="menu-toggle">
@@ -81,10 +82,10 @@
         </a>
       </li>
 
-      <li class="nav-item dropdown has-arrow new-user-menus">
+      <li class="nav-item dropdown has-arrow new-user-menus" th:if="${#authentication.isAuthenticated()}">
         <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
-                            <img class="rounded-circle" th:src="@{/assets/img/profiles/profile-user.jpg}" width="31"
+                            <img class="rounded-circle" th:src="@{/assets/img/profile-user.jpg}" width="31"
                                  alt="username">
                             <div class="user-text">
                                               <h6 th:text="${#authentication.principal.lastName+' '+#authentication.principal.firstName}"></h6>
@@ -99,10 +100,10 @@
         <div class="dropdown-menu">
           <div class="user-header">
             <div class="avatar avatar-sm">
-              <img th:src="@{/assets/img/avatar-01.jpg}" alt="User Image"
+              <img th:src="@{/assets/img/profile-user.jpg}" alt="User Image"
                    class="avatar-img rounded-circle">
             </div>
-            <div class="user-text">
+            <div class="user-text" >
               <h6 th:text="${#authentication.principal.lastName+' '+#authentication.principal.firstName}"></h6>
               <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}">Admin</p>
               <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_teacher')}">Teacher</p>
@@ -111,9 +112,11 @@
 
             </div>
           </div>
-          <a class="dropdown-item" href="profile.html">My Profile</a>
+          <a class="dropdown-item" th:href="@{/admin/accounts/}">My Profile</a>
           <a class="dropdown-item" href="inbox.html">Inbox</a>
-          <a class="dropdown-item" href="/logout">Logout</a>
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="dropdown-item">Logout</button>
+          </form>
         </div>
       </li>
 
@@ -130,31 +133,33 @@
             <span>Main Menu</span>
           </li>
           <li>
-            <a href="#"><i class="feather-grid"></i><span> Dashboard</span></a>
+            <a th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" href="/admin"><i class="feather-grid"></i><span> Dashboard</span></a>
+            <a th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}"  href="/student"><i class="feather-grid"></i><span> Dashboard</span></a>
           </li>
-          <li class="submenu">
+          <li  class="submenu">
             <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
                     class="menu-arrow"></span></a>
             <ul>
-              <li><a href="/admin/students">Student List</a></li>
-              <li><a href="/admin/students/add">Student Add</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}"><a href="/student/students">Student List</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}"><a href="/admin/students">Student List</a></li>
+              <li  th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}"><a href="/admin/students/add">Student Add</a></li>
             </ul>
           </li>
           <li class="submenu">
             <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
                     class="menu-arrow"></span></a>
             <ul>
-              <li><a href="/admin/teachers">Student List</a></li>
-              <li><a href="/admin/teachers/add">Student Add</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" ><a href="/admin/teachers">Teachers List</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" ><a href="/admin/teachers/add">Teacher Add</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}" ><a href="/admin/teachers/add">My Teachers</a></li>
             </ul>
           </li>
-          <li class="submenu">
-            <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span
+          <li  th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" class="submenu">
+            <a href="#"><i class="fas fa-building"></i> <span> Administration</span> <span
                     class="menu-arrow"></span></a>
             <ul>
-              <li><a href="departments.html">Department List</a></li>
-              <li><a href="add-department.html">Department Add</a></li>
-              <li><a href="edit-department.html">Department Edit</a></li>
+              <li><a href="departments.html">School administrators List</a></li>
+              <li><a href="add-department.html">School administrators Add</a></li>
             </ul>
           </li>
           <li class="submenu">
@@ -166,7 +171,15 @@
               <li><a href="edit-subject.html">Courses Edit</a></li>
             </ul>
           </li>
-          <li class="menu-title">
+          <li class="submenu">
+            <a href="#"><i class="fas fa-book-reader"></i> <span> Modules</span> <span
+                    class="menu-arrow"></span></a>
+            <ul>
+              <li><a href="subjects.html">Modules List</a></li>
+              <li  th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}"><a href="add-subject.html">Modules Add</a></li>
+            </ul>
+          </li>
+          <li  th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" class="menu-title">
             <span>Management</span>
           </li>
           <li class="submenu">
@@ -175,6 +188,23 @@
             <ul>
               <li><a href="/admin/accounts">Accounts List</a></li>
               <li><a href="/admin/accounts/add">Accounts Add</a></li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="#"><i class="fas fa-book-reader"></i> <span> Absences</span> <span
+                    class="menu-arrow"></span></a>
+            <ul>
+              <li><a href="subjects.html">Absences List</a></li>
+              <li><a href="add-subject.html">justify absence</a></li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="#"><i class="fas fa-book-reader"></i> <span> Inscriptions</span> <span
+                    class="menu-arrow"></span></a>
+            <ul>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}" ><a href="subjects.html">My inscriptions</a></li>
+              <li th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}" ><a href="subjects.html">Inscriptions List</a></li>
+
             </ul>
           </li>
         </ul>

@@ -29,8 +29,6 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
             "/bootstrap/**",
             "/css/**",
             "/img/**",
-
-            "/admin/**" // for dev only
     };
 
 
@@ -42,10 +40,11 @@ public class securityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .authorizeRequests()
                 .antMatchers(WHITELIST).permitAll()
+                .antMatchers("/logout").permitAll()
                 .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/teacher/**").hasRole("TEACHER")
                 .antMatchers("/school-administrator/**").hasRole("ADMINISTRATOR")
-//                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

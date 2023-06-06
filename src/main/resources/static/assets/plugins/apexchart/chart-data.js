@@ -15,7 +15,22 @@ if($('#s-bar').length>0){var sBar={chart:{height:350,type:'bar',toolbar:{show:fa
 var chart=new ApexCharts(document.querySelector("#s-bar"),sBar);chart.render();}
 if($('#mixed-chart').length>0){var options={chart:{height:350,type:'line',toolbar:{show:false,}},series:[{name:'Website Blog',type:'column',data:[440,505,414,671,227,413,201,352,752,320,257,160]},{name:'Social Media',type:'line',data:[23,42,35,27,43,22,17,31,22,22,12,16]}],stroke:{width:[0,4]},title:{text:'Traffic Sources'},labels:['01 Jan 2001','02 Jan 2001','03 Jan 2001','04 Jan 2001','05 Jan 2001','06 Jan 2001','07 Jan 2001','08 Jan 2001','09 Jan 2001','10 Jan 2001','11 Jan 2001','12 Jan 2001'],xaxis:{type:'datetime'},yaxis:[{title:{text:'Website Blog',},},{opposite:true,title:{text:'Social Media'}}]}
 var chart=new ApexCharts(document.querySelector("#mixed-chart"),options);chart.render();}
-if($('#donut-chart').length>0){var donutChart={chart:{height:350,type:'donut',toolbar:{show:false,}},series:[44,55,41,17],responsive:[{breakpoint:480,options:{chart:{width:200},legend:{position:'bottom'}}}]}
+if($('#donut-chart').length>0){var donutChart={
+    chart:{height:350,type:'donut',
+        toolbar:{show:false,}},
+    series:[1,50,49,0],
+    responsive:[{breakpoint:480,
+        options:{chart:{width:200},legend:
+                {position:'bottom'}}}]}
 var donut=new ApexCharts(document.querySelector("#donut-chart"),donutChart);donut.render();}
-if($('#radial-chart').length>0){var radialChart={chart:{height:350,type:'radialBar',toolbar:{show:false,}},plotOptions:{radialBar:{dataLabels:{name:{fontSize:'22px',},value:{fontSize:'16px',},total:{show:true,label:'Total',formatter:function(w){return 249}}}}},series:[44,55,67,83],labels:['Apples','Oranges','Bananas','Berries'],}
+if($('#radial-chart').length>0){
+    var radialChart=
+        {chart: {height:350,type:'radialBar',toolbar:{show:false,}},
+            plotOptions: {
+            radialBar:{dataLabels:{name:{fontSize:'22px',},
+                    value:{fontSize:'16px',},
+                    total:{show:true,label:'Total',
+                        formatter:function(w){return 41}}}}},
+            series:[1,49,49,0]
+            ,labels:['Admins','Students','Teacher','School administrators'],}
 var chart=new ApexCharts(document.querySelector("#radial-chart"),radialChart);chart.render();}
