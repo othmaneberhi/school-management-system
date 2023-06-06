@@ -8,16 +8,12 @@ import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IRoleService;
 import com.ensah.schoolmanagementsystem.service.IUserService;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -59,6 +55,7 @@ public class AccountController {
                                 @PathVariable("id") Long user_id,
                                 @RequestParam("roleName") String roleName,
                                 RedirectAttributes redirectAttributes){
+        String sourceUrl = request.getHeader("Referer");
         Optional<User> user = userService.getUserById(user_id);
         if(user.isEmpty()){
             throw new NotFoundException("User not found");
@@ -85,7 +82,7 @@ public class AccountController {
         accountCreated.put("password", password);
 
         redirectAttributes.addFlashAttribute("accountCreated",accountCreated);
-        return "redirect:/admin/students/"+user_id;
+        return "redirect:" + sourceUrl;
     }
 
     @PostMapping("/accounts/{id}/toggleEnabled")
@@ -126,38 +123,25 @@ public class AccountController {
         return "redirect:" + sourceUrl;
     }
 
+    @PostMapping("/accounts/{id}/reset-password")
+    public String resetPassword(@PathVariable("id")Long id,
+                                RedirectAttributes redirectAttributes,
+                                HttpServletRequest request){
+        String sourceUrl = request.getHeader("Referer");
+        Optional<Account> account = accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("account not found");
+        }
+        String password = generateRandomPassword(10);
+        account.get().setPassword(passwordEncoder.encode(password));
+        accountService.addAccount(account.get());
 
-//    @PostMapping("/accounts/{id}/edit")
-//    public String accountEdit(@PathVariable("id") Long id,
-//                              @RequestParam(name = "role",required = true) String roleName,
-//                              @RequestParam(name = "enable", required = false, defaultValue = "false") Boolean enabled,
-//
-//                              RedirectAttributes redirectAttributes,
-//                              HttpServletRequest request){
-//        String sourceUrl = request.getHeader("Referer");
-//        if (!isRoleNameValid(roleName)) {
-//            throw new NotFoundException("Role not found");
-//        }
-//        Optional<Account> account = accountService.getAccountById(id);
-//        if(account.isEmpty()){
-//            throw new NotFoundException("Account not found");
-//        }
-//
-//        Optional<Role> role = Optional.ofNullable(roleService.getRoleByRoleName(roleName));
-//        if(role.isEmpty()){
-//            throw new NotFoundException("Role not found");
-//        }
-//
-//
-//        System.out.println(enabled);
-//        account.get().setEnabled(enabled);
-//        account.get().setRole(role.get());
-////        accountService.updateAccount(account.get());
-//
-//        redirectAttributes.addFlashAttribute("accountUpdatedMessage","Account updated successfully");
-//        return "redirect:" + sourceUrl;
-//    }
-
+        Map<String, Object> passwordReset= new HashMap<>();
+        passwordReset.put("message", "password has been reset successfully");
+        passwordReset.put("password", password);
+        redirectAttributes.addFlashAttribute("passwordReset", passwordReset);
+        return "redirect:" + sourceUrl;
+    }
 
 //    @GetMapping("/accounts")
 //    public String accounts(Model model){
