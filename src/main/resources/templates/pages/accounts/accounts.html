@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/wrapper}">
+<head>
+    <meta charset="UTF-8">
+    <title>Schoolio - accounts</title>
+</head>
+<body>
+
+<div layout:fragment="pageContent">
+    <div class="content container-fluid">
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-sub-header">
+                        <h3 class="page-title">accounts</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="accounts.html">account</a></li>
+                            <li class="breadcrumb-item active">All accounts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="student-group-form">
+            <form method="post" th:action="@{/admin/accounts/search}">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <select class="form-select form-select-sm" name="role" aria-label="Search by role ..." >
+                        <option value="ROLE_STUDENT" >Student</option>
+                        <option value="ROLE_TEACHER" >Teacher</option>
+                        <option value="ROLE_SCHOOL_ADMINISTRATOR">School administrator</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Search by ID ...">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="search-student-btn">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table comman-shadow">
+                    <div class="card-body">
+
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">accounts</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" th:if="${searchMsg}">
+                            <p class="text-dark fw-bold" th:text="${searchMsg}"></p>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(accounts)}" class="row text-center my-2 fw-bold" >
+                            <h5>No account found !</h5>
+                        </div>
+
+                        <div th:if="${not #lists.isEmpty(accounts)}" class="table-responsive">
+                            <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <thead class="student-thread">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Enabled</th>
+                                    <th>Locked</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="account : ${accounts}">
+                                    <td th:text="${account.id}"></td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${account.id}}" th:text="${account.user.lastName+' '+account.user.firstName}"></a>
+                                        </h2>
+                                    </td>
+                                    <td th:text="${account.user.email}"></td>
+                                    <td>
+                                        <span th:if="${#strings.equalsIgnoreCase(account.role.roleName,'role_admin')}">Admin</span>
+                                        <span th:if="${#strings.equalsIgnoreCase(account.role.roleName,'role_teacher')}">Teacher</span>
+                                        <span th:if="${#strings.equalsIgnoreCase(account.role.roleName,'role_student')}">Student</span>
+                                        <span th:if="${#strings.equalsIgnoreCase(account.role.roleName,'role_school_administrator')}">School administrator</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${account.enabled}" class="badge badge-soft-success">Enabled</span>
+                                        <span th:if="${not account.enabled}" class="badge badge-soft-danger">Disabled</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${account.locked}" class="badge badge-soft-warning">Locked</span>
+                                        <span th:if="${not account.locked}" class="badge badge-soft-dark">Opened</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="actions ">
+                                            <a th:href="@{'/' + ${account.user.id}}" class="btn btn-sm bg-success-light me-2 ">
+                                                <i class="feather-eye"></i>
+                                            </a>
+                                            <a th:href="@{'/' + ${account.user.id} + '/edit'} " class="btn btn-sm bg-danger-light">
+                                                <i class="feather-edit"></i>
+                                            </a>
+                                            <a th:href="@{'/' + ${account.user.id} + '/delete'} " class="btn btn-sm bg-danger-light">
+                                                <i class="feather-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
