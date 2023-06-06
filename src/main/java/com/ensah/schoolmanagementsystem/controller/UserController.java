@@ -21,28 +21,4 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @GetMapping("/users/{id}")
-//    public String getUser(@PathVariable("id") Long id){
-//        Optional<User> user = userService.getUserById(id);
-//        if(user.isEmpty()){
-//            throw new NotFoundException("User not found");
-//        }
-//        if(user.get().getAccount()==null){
-//
-//        }
-//        String roleName = user.get().getAccount().getRole().getRoleName();
-//        if(roleName.equals("ROLE_TEACHER")){
-//            return "redirect:/teachers/"+user.get().getId();
-//        }
-//        if(roleName.equals("ROLE_STUDENT")){
-//            return "redirect:/students/"+user.get().getId();
-//        }
-//        if(roleName.equals("ROLE_SCHOOL_ADMINISTRATOR")){
-//            return "redirect:/school-administrators/"+user.get().getId();
-//        }
-//        if(roleName.equals("ROLE_ADMIN")){
-//            return "redirect:/admin/"+user.get().getId();
-//        }
-//        return "";
-//    }
 }

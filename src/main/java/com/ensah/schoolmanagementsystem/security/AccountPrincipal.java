@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AccountPrincipal implements UserDetails {
-    private Account account; // The user account (persistent class to be managed by the ORM)
+    private Account account;
     public AccountPrincipal(Account account) {
         this.account = account;
     }
