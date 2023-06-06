@@ -29,7 +29,8 @@
             <form method="post" th:action="@{/admin/accounts/search}">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
-                    <select class="form-select form-select-sm" name="role" aria-label="Search by role ..." >
+                    <select class="form-select form-select" name="role" aria-label="Search by role ..." >
+                        <option value="All" selected>Student</option>
                         <option value="ROLE_STUDENT" >Student</option>
                         <option value="ROLE_TEACHER" >Teacher</option>
                         <option value="ROLE_SCHOOL_ADMINISTRATOR">School administrator</option>

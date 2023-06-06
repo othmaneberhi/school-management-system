@@ -84,23 +84,31 @@
       <li class="nav-item dropdown has-arrow new-user-menus">
         <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
-                            <img class="rounded-circle" th:src="@{/assets/img/profiles/avatar-01.jpg}" width="31"
-                                 alt="Soeng Souy">
+                            <img class="rounded-circle" th:src="@{/assets/img/profiles/profile-user.jpg}" width="31"
+                                 alt="username">
                             <div class="user-text">
-                                <h6>Soeng Souy</h6>
-                                <p class="text-muted mb-0">Administrator</p>
+                                              <h6 th:text="${#authentication.principal.lastName+' '+#authentication.principal.firstName}"></h6>
+                             <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}">Admin</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_teacher')}">Teacher</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}">Student</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_school_administrator')}">School administrator</p>
+
                             </div>
                         </span>
         </a>
         <div class="dropdown-menu">
           <div class="user-header">
             <div class="avatar avatar-sm">
-              <img th:src="@{/assets/img/profiles/avatar-01.jpg}" alt="User Image"
+              <img th:src="@{/assets/img/avatar-01.jpg}" alt="User Image"
                    class="avatar-img rounded-circle">
             </div>
             <div class="user-text">
-              <h6>Soeng Souy</h6>
-              <p class="text-muted mb-0">Administrator</p>
+              <h6 th:text="${#authentication.principal.lastName+' '+#authentication.principal.firstName}"></h6>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_admin')}">Admin</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_teacher')}">Teacher</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_student')}">Student</p>
+              <p class="text-muted mb-0" th:if="${#strings.equalsIgnoreCase(#authentication.authorities[0],'role_school_administrator')}">School administrator</p>
+
             </div>
           </div>
           <a class="dropdown-item" href="profile.html">My Profile</a>
@@ -136,8 +144,8 @@
             <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span
                     class="menu-arrow"></span></a>
             <ul>
-              <li><a href="teachers.html">Teacher List</a></li>
-              <li><a href="add-teacher.html">Teacher Add</a></li>
+              <li><a href="/admin/teachers">Student List</a></li>
+              <li><a href="/admin/teachers/add">Student Add</a></li>
             </ul>
           </li>
           <li class="submenu">
@@ -165,9 +173,8 @@
             <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Accounts</span> <span
                     class="menu-arrow"></span></a>
             <ul>
-              <li><a href="fees-collections.html">f1</a></li>
-              <li><a href="expenses.html">f2</a></li>
-              <li><a href="salary.html">f3</a></li>
+              <li><a href="/admin/accounts">Accounts List</a></li>
+              <li><a href="/admin/accounts/add">Accounts Add</a></li>
             </ul>
           </li>
         </ul>
