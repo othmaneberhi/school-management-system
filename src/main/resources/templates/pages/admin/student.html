@@ -70,7 +70,9 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id} + '/'} " type="button" class="btn btn-danger">Delete</a>
+                                                            <form th:action="@{'/admin/students/' + ${student.id} + '/delete'}" method="post">
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

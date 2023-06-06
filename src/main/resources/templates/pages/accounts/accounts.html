@@ -106,15 +106,38 @@
                                     </td>
                                     <td class="text-end">
                                         <div class="actions ">
-                                            <a th:href="@{'/' + ${account.user.id}}" class="btn btn-sm bg-success-light me-2 ">
+                                            <a th:href="@{'/admin/accounts/' + ${account.id}}" class="btn btn-sm bg-success-light me-2 ">
                                                 <i class="feather-eye"></i>
                                             </a>
-                                            <a th:href="@{'/' + ${account.user.id} + '/edit'} " class="btn btn-sm bg-danger-light">
+                                            <a th:href="@{'/admin/accounts/' + ${account.id} + '/edit'} " class="btn btn-sm bg-danger-light">
                                                 <i class="feather-edit"></i>
                                             </a>
-                                            <a th:href="@{'/' + ${account.user.id} + '/delete'} " class="btn btn-sm bg-danger-light">
+                                            <button class="btn btn-sm bg-danger-light" data-bs-toggle="modal" data-bs-target="#top-modal">
                                                 <i class="feather-trash"></i>
-                                            </a>
+                                            </button>
+
+                                            <div id="top-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-top">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="topModalLabel">Delete account</h4>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h5>Are you sure you want to delete this account ?</h5>
+                                                                <p>Note: Deleting this account will not delete the associated user</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <form th:action="@{'/admin/accounts/' + ${account.id} + '/delete'}" method="post">
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </td>
                                 </tr>

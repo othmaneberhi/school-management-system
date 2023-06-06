@@ -137,7 +137,7 @@ public class StudentController {
             accountService.deleteAccount(account);
         }
         studentService.deleteStudent(student.get());
-        return "pages/admin/students";
+        return "redirect:/admin/students";
     }
 
     @PostMapping("/students/search")

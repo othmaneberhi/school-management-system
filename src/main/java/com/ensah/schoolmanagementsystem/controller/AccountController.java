@@ -175,11 +175,44 @@ public class AccountController {
         }
         return "redirect:/admin/accounts";
     }
+    @GetMapping("/accounts/{id}/edit")
+    public String editAccount(@PathVariable("id") Long id){
+        Optional<Account> account= accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("Account not found");
+        }
+        Optional<User> user = Optional.ofNullable(account.get().getUser());
+        if(user.isEmpty()){
+            throw new NotFoundException("User liked to the account not found");
+        }
 
-    @PostMapping("/accounts/{id}/delete")
-    public String deleteAccount(){
-
+        String roleName = user.get().getAccount().getRole().getRoleName();
+        if(roleName.equalsIgnoreCase("ROLE_ADMIN")){
+            return "redirect:/admin/admins/"+user.get().getId()+"/edit";
+        }
+        if (roleName.equalsIgnoreCase("ROLE_SCHOOL_ADMINISTRATOR")) {
+            return "redirect:/admin/school-administrators/"+user.get().getId()+"/edit";
+        }
+        if (roleName.equalsIgnoreCase("ROLE_TEACHER")) {
+            return "redirect:/admin/teachers/"+user.get().getId()+"/edit";
+        }
+        if (roleName.equalsIgnoreCase("ROLE_STUDENT")){
+            return "redirect:/admin/students/"+user.get().getId()+"/edit";
+        }
         return "redirect:/admin/accounts";
     }
+
+    @PostMapping("/accounts/{id}/delete")
+    public String deleteAccount(@PathVariable("id")Long id){
+        Optional<Account> account = accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("Account not found");
+        }
+        User student = account.get().getUser();
+        student.setAccount(null);
+        accountService.deleteAccount(account.get());
+        return "redirect:/admin/accounts";
+    }
+
 
 }
