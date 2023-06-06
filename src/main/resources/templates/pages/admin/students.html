@@ -101,7 +101,7 @@
                                     <td th:text="${student.id}"></td>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id}}" th:text="${student.lastName+' '+student.firstName}">Aaliyah</a>
+                                            <a th:href="@{${#httpServletRequest.requestURI} + '/' + ${student.id}}" th:text="${student.lastName+' '+student.firstName}"></a>
                                         </h2>
                                     </td>
                                     <td th:text="${student.cne}"></td>
@@ -118,7 +118,7 @@
                                                 <i class="feather-edit"></i>
                                             </a>
                                             <a th:href="@{'/' + ${student.id} + '/delete'} " class="btn btn-sm bg-danger-light">
-                                                <i class="feather-x"></i>
+                                                <i class="feather-trash"></i>
                                             </a>
                                         </div>
                                     </td>

@@ -13,4 +13,6 @@ public interface IAccountService {
 
     public List<Account> getAllAccounts();
     public void deleteAccount(Account account);
+    public List<Account> getAllAccountsByOrderById();
+    public List<Account> getAllAccountsWithUserByOrderById();
 }

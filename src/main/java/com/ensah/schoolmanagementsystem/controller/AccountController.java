@@ -10,6 +10,7 @@ import com.ensah.schoolmanagementsystem.service.IRoleService;
 import com.ensah.schoolmanagementsystem.service.IUserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -135,7 +136,6 @@ public class AccountController {
         String password = generateRandomPassword(10);
         account.get().setPassword(passwordEncoder.encode(password));
         accountService.addAccount(account.get());
-
         Map<String, Object> passwordReset= new HashMap<>();
         passwordReset.put("message", "password has been reset successfully");
         passwordReset.put("password", password);
@@ -143,20 +143,43 @@ public class AccountController {
         return "redirect:" + sourceUrl;
     }
 
-//    @GetMapping("/accounts")
-//    public String accounts(Model model){
-//       List<Account> accountList = accountService.getAllAccounts();
-//       model.addAttribute("accounts",accountList);
-//        return "accounts/accounts";
-//    }
-//    @GetMapping("/accounts/{id}")
-//    public String account(@PathVariable("id")Long id,
-//                          Model model){
-//        Optional<Account> account = accountService.getAccountById(id);
-//        if(account.isEmpty()){
-//            throw new NotFoundException("Account not found");
-//        }
-//        model.addAttribute("account",account);
-//        return "accounts/account";
-//    }
+    @GetMapping("/accounts")
+    public String accounts(Model model){
+       List<Account> accountList = accountService.getAllAccountsWithUserByOrderById();
+       model.addAttribute("accounts",accountList);
+        return "pages/accounts/accounts";
+    }
+    @GetMapping("/accounts/{id}")
+    public String getAccount(@PathVariable("id") Long id){
+        Optional<Account> account= accountService.getAccountById(id);
+        if(account.isEmpty()){
+            throw new NotFoundException("Account not found");
+        }
+        Optional<User> user = Optional.ofNullable(account.get().getUser());
+        if(user.isEmpty()){
+            throw new NotFoundException("User liked to the account not found");
+        }
+
+        String roleName = user.get().getAccount().getRole().getRoleName();
+        if(roleName.equalsIgnoreCase("ROLE_ADMIN")){
+            return "redirect:/admin/admins/"+user.get().getId();
+        }
+        if (roleName.equalsIgnoreCase("ROLE_SCHOOL_ADMINISTRATOR")) {
+            return "redirect:/admin/school-administrators/"+user.get().getId();
+        }
+        if (roleName.equalsIgnoreCase("ROLE_TEACHER")) {
+            return "redirect:/admin/teachers/"+user.get().getId();
+        }
+        if (roleName.equalsIgnoreCase("ROLE_STUDENT")){
+            return "redirect:/admin/students/"+user.get().getId();
+        }
+        return "redirect:/admin/accounts";
+    }
+
+    @PostMapping("/accounts/{id}/delete")
+    public String deleteAccount(){
+
+        return "redirect:/admin/accounts";
+    }
+
 }

@@ -39,4 +39,14 @@ public class AccountService implements IAccountService{
     public void deleteAccount(Account account) {
         accountRepository.delete(account);
     }
+
+    @Override
+    public List<Account> getAllAccountsByOrderById() {
+        return accountRepository.findAllByOrderById();
+    }
+
+    @Override
+    public List<Account> getAllAccountsWithUserByOrderById() {
+        return accountRepository.findAllWithUserOrderedById();
+    }
 }
