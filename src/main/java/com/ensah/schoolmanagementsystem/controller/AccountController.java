@@ -8,6 +8,7 @@ import com.ensah.schoolmanagementsystem.excpetion.NotFoundException;
 import com.ensah.schoolmanagementsystem.service.IAccountService;
 import com.ensah.schoolmanagementsystem.service.IRoleService;
 import com.ensah.schoolmanagementsystem.service.IUserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -212,6 +213,37 @@ public class AccountController {
         student.setAccount(null);
         accountService.deleteAccount(account.get());
         return "redirect:/admin/accounts";
+    }
+
+    @PostMapping("/accounts/search")
+    public String searchAccounts(@RequestParam(required = false,name="role") String roleName,
+                                 @RequestParam(required = false,name="name") String name,
+                                 @RequestParam(required = false,name="email") String email,
+                                 Model model){
+
+        System.out.println(roleName);
+        List<Account> accounts = new ArrayList<Account>();
+
+
+        if( !name.isEmpty()){
+            accounts.addAll(accountService.getAllAccountsBySimilarNameWithUser(name));
+        }
+        if( !email.isEmpty()){
+            accounts.addAll(accountService.getAllAccountsByEmailWithUser(email));
+        }
+        if( !roleName.isEmpty() && !roleName.equalsIgnoreCase("all")){
+            if(!isRoleNameValid(roleName)){
+                throw new NotFoundException("role is not found");
+            }
+            accounts.addAll(accountService.getAllAccountsByRoleNameWithUser(roleName));
+        }
+        if(roleName.equalsIgnoreCase("all") && email.isEmpty() && name.isEmpty()){
+            accounts = accountService.getAllAccountsWithUserByOrderById();
+        }
+
+        model.addAttribute("searchMsg","Showing results of search ("+accounts.size()+")");
+        model.addAttribute("accounts",accounts);
+        return "pages/accounts/accounts";
     }
 
 

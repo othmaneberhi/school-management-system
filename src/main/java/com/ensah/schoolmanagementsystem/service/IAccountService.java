@@ -15,4 +15,7 @@ public interface IAccountService {
     public void deleteAccount(Account account);
     public List<Account> getAllAccountsByOrderById();
     public List<Account> getAllAccountsWithUserByOrderById();
+    public List<Account> getAllAccountsByRoleNameWithUser(String roleName);
+    public List<Account> getAllAccountsByEmailWithUser(String email);
+    public List<Account> getAllAccountsBySimilarNameWithUser(String name);
 }

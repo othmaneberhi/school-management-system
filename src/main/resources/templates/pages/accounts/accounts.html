@@ -28,20 +28,25 @@
         <div class="student-group-form">
             <form method="post" th:action="@{/admin/accounts/search}">
             <div class="row">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <select class="form-select form-select" name="role" aria-label="Search by role ..." >
-                        <option value="All" selected>Student</option>
+                        <option value="All" selected>ALL</option>
                         <option value="ROLE_STUDENT" >Student</option>
                         <option value="ROLE_TEACHER" >Teacher</option>
                         <option value="ROLE_SCHOOL_ADMINISTRATOR">School administrator</option>
                     </select>
                 </div>
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Search by ID ...">
+                        <input type="text" name="email" class="form-control" placeholder="Search by Email ...">
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3 col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Search by name ...">
+                    </div>
+                </div>
+                <div class="col-lg-3">
                     <div class="search-student-btn">
                         <button type="submit" class="btn btn-primary">Search</button>
                     </div>

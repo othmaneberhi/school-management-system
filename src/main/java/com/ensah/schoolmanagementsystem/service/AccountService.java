@@ -49,4 +49,19 @@ public class AccountService implements IAccountService{
     public List<Account> getAllAccountsWithUserByOrderById() {
         return accountRepository.findAllWithUserOrderedById();
     }
+
+    @Override
+    public List<Account> getAllAccountsByRoleNameWithUser(String roleName) {
+        return accountRepository.findAllByRoleNameWithUser(roleName);
+    }
+
+    @Override
+    public List<Account> getAllAccountsByEmailWithUser(String email) {
+        return accountRepository.findAllByEmailWithUser(email);
+    }
+
+    @Override
+    public List<Account> getAllAccountsBySimilarNameWithUser(String name) {
+        return accountRepository.findAllBySimilarNameWithUser(name);
+    }
 }
