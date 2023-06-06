@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                         <div class="d-flex align-self-center ms-auto me-4">
-                                            <a href="/edit " class="btn btn-sm btn-primary">
+                                            <a th:href="@{'/admin/students/' + ${student.id} + '/edit'}" class="btn btn-sm btn-primary">
                                                 Edit
                                             </a>
                                             <button type="button" class="btn btn-sm btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#top-modal">Delete</button>
